@@ -11,7 +11,7 @@ function App() {
 
    return (
       <>
-         <div className='bg-background h-screen'>
+         <div className=' h-screen'>
             <Navbar />
             <Routes>
                <Route path='/' element={<Landing />} />

@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Landing() {
    return (
-      <div className='bg-[#e5e7ff]'>
-         <section className=' flex h-[80%] bg-[#EEEFF5] w-[90%] mx-auto p-8 rounded-xl '>
+      <div className=''>
+         <section className=' flex h-[80%]  w-[90%] mx-auto p-8 rounded-xl '>
             <div>
                <h1 className='text-[#396AF1] font-bold text-5xl'>
                   Event <br /> Managemen for College Event
@@ -22,9 +22,7 @@ export default function Landing() {
                alt=''
             />
          </section>
-         <section className='  h-[80%] bg-[#EEEFF5] w-[90%] mx-auto mt-10'>
-            yo
-         </section>
+         <section className='  h-[80%]  w-[90%] mx-auto mt-10'>yo</section>
       </div>
    );
 }

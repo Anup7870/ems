@@ -10,6 +10,7 @@ export default {
             darkGray: "#2C2E3A",
             dark: "#141619",
             card: "#EEEFF5",
+            primary: "#ff407d",
          },
       },
    },
