@@ -13,7 +13,7 @@ export default function Login() {
       console.log(data);
    };
    return (
-      <div className='w-full h-[90%] flex justify-center items-center place-items-center'>
+      <div className='w-full h-[89%] flex justify-center items-center place-items-center'>
          <div className='w-full md:w-[80%]  mx-auto border border-background shadow-xl rounded-xl  p-5 flex'>
             <div className='w-[0%] md:w-[50%] h-[30rem]'>
                <img
