@@ -3,14 +3,27 @@ import { Button, Input } from "@chakra-ui/react";
 import login from "../assets/login.jpg";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function Login() {
    const {
       register,
       handleSubmit,
       formState: { errors },
    } = useForm();
-   const formSubmit = (data) => {
+   const navigate = useNavigate();
+   const formSubmit = async (data) => {
       console.log(data);
+      try {
+         const api = await axios.post("http://localhost:3000/auth/login", data);
+
+         if (api.status === 200) {
+            console.log("Login successfull");
+            navigate("/dashboard");
+         }
+      } catch (error) {
+         console.log(error);
+      }
    };
    return (
       <div className='w-full h-[89%] flex justify-center items-center place-items-center'>
