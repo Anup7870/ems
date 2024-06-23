@@ -20,7 +20,12 @@ import CollegeInfo from "../components/CollegeInfo.jsx";
 import VerifyInfo from "../components/VerfiyInfo.jsx";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from "../utils/UploadImage.js";
-
+import {
+   signupStart,
+   singupSucess,
+   signupFailure,
+} from "../redux/slice/userSlice.js";
+import { useDispatch, useSelector } from "react-redux";
 const steps = [
    { title: "First", description: "Personal Info" },
    { title: "Second", description: "College Info" },
@@ -35,6 +40,8 @@ export default function Signup() {
       setValue,
    } = useForm();
 
+   const dispatch = useDispatch();
+   const { loading } = useSelector((state) => state.user);
    const naviagate = useNavigate();
 
    const { activeStep, setActiveStep } = useSteps({
@@ -50,6 +57,7 @@ export default function Signup() {
    };
    const handleApi = async (data) => {
       try {
+         dispatch(signupStart());
          console.log(data);
          const user = await uploadImage(data.userImage);
          const college = await uploadImage(data.collegeLogo);
@@ -62,13 +70,15 @@ export default function Signup() {
          );
          console.log(api);
          if (api.status === 201) {
-            alert("User Registered Successfully");
+            dispatch(singupSucess());
             naviagate("/login");
          }
-      } catch {}
+      } catch (error) {
+         dispatch(signupFailure(error));
+      }
    };
    return (
-      <div className='w-full h-[89%]  flex items-center justify-center'>
+      <div className='w-full h-[89%]  flex items-center justify-center mt-20'>
          <div className='w-full relative md:w-[80%] mt-5 h-full  border border-background shadow-xl rounded-xl  p-5 '>
             <Stepper size='lg' index={activeStep}>
                {steps.map((step, index) => (

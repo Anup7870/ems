@@ -8,6 +8,8 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import { useSelector, useDispatch } from "react-redux";
+import PrivateRoute from "./pages/PrivateRoute.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 function App() {
    const [count, setCount] = useState(0);
    const { user } = useSelector((state) => state.user);
@@ -15,12 +17,15 @@ function App() {
    console.log(user);
    return (
       <>
-         <div className=' h-screen'>
-            <Navbar />
+         <div className=' h-screen relative'>
+            <Navbar className='' />
             <Routes>
                <Route path='/' element={<Landing />} />
                <Route path='/login' element={<Login />} />
                <Route path='/register' element={<Signup />} />
+               <Route element={<PrivateRoute />}>
+                  <Route path='/dashboard' element={<Dashboard />} />
+               </Route>
             </Routes>
             {/* <Landing /> */}
          </div>

@@ -4,21 +4,24 @@ import { FiMail } from "react-icons/fi";
 import { MdArrowRightAlt } from "react-icons/md";
 import logo from "../assets/logo.webp";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
    const [isLogged, setIsLogged] = useState(true);
    const [avatarClicked, setAvatarClicked] = useState(false);
+   const { user } = useSelector((state) => state.user);
    const navigate = useNavigate();
+
    return (
-      <div className='w- px-8 py-2 border-b border-darkBlue '>
-         <nav className='w-full flex justify-between items-center'>
+      <div className='w-full px-8 py-2 border-b border-darkBlue fixed top-0 bg-white '>
+         <nav className='w-full flex justify-between items-center z-10 '>
             <img
                src={logo}
                alt='logo'
                srcset=''
                className=' w-9 h-9 md:w-14 md:h-14 rounded-full object-cover'
             />
-            {isLogged ? (
+            {!user ? (
                <ButtonGroup>
                   <Button
                      leftIcon={<FiMail />}
@@ -40,7 +43,7 @@ export default function Navbar() {
                <>
                   <Avatar
                      name='Dan Abrahmov'
-                     src='https://bit.ly/dan-abramov'
+                     src={user.image.userImage}
                      onClick={() => setAvatarClicked(!avatarClicked)}
                      className=' cursor-pointer'
                   />

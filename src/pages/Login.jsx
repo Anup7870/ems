@@ -4,6 +4,14 @@ import login from "../assets/login.jpg";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+// redux import
+import { useDispatch, useSelector } from "react-redux";
+import {
+   signInStart,
+   signInSuccess,
+   signInFailure,
+} from "../redux/slice/userSlice";
+import Cookies from "js-cookie";
 import axios from "axios";
 export default function Login() {
    const {
@@ -11,22 +19,30 @@ export default function Login() {
       handleSubmit,
       formState: { errors },
    } = useForm();
+   const { user, loading } = useSelector((state) => state.user);
+   const dispatch = useDispatch();
    const navigate = useNavigate();
    const formSubmit = async (data) => {
       console.log(data);
       try {
+         dispatch(signInStart());
          const api = await axios.post("http://localhost:3000/auth/login", data);
 
          if (api.status === 200) {
             console.log("Login successfull");
+            dispatch(signInSuccess(api.data.rest));
+            console.log(api.data.token);
+            // set token in cookie
+            Cookies.set("access_token", api.data.token);
             navigate("/dashboard");
          }
       } catch (error) {
-         console.log(error);
+         dispatch(signInFailure(error));
       }
    };
+
    return (
-      <div className='w-full h-[89%] flex justify-center items-center place-items-center'>
+      <div className='w-full h-[89%] flex justify-center items-center place-items-center mt-20'>
          <div className='w-full md:w-[80%]  mx-auto border border-background shadow-xl rounded-xl  p-5 flex'>
             <div className='w-[0%] md:w-[50%] h-[30rem]'>
                <img
@@ -81,7 +97,10 @@ export default function Login() {
                            </p>
                         )}
                      </div>
-                     <Button type='submit' className='w-full '>
+                     <Button
+                        isLoading={loading}
+                        type='submit'
+                        className='w-full '>
                         Sign In
                      </Button>
                   </form>

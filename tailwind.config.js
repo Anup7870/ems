@@ -11,6 +11,7 @@ export default {
             dark: "#141619",
             card: "#EEEFF5",
             primary: "#ff407d",
+            grad: " ",
          },
       },
    },
