@@ -10,11 +10,12 @@ import Signup from "./pages/Signup.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import PrivateRoute from "./pages/PrivateRoute.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import EventShow from "./pages/EventShow.jsx";
 function App() {
    const [count, setCount] = useState(0);
    const { user } = useSelector((state) => state.user);
    const dispatch = useDispatch();
-   console.log(user);
+   // console.log(user);   
    return (
       <>
          <div className=' h-screen relative'>
@@ -25,6 +26,7 @@ function App() {
                <Route path='/register' element={<Signup />} />
                <Route element={<PrivateRoute />}>
                   <Route path='/dashboard' element={<Dashboard />} />
+                  <Route path='/events/:eventId' element={<EventShow />} />
                </Route>
             </Routes>
             {/* <Landing /> */}

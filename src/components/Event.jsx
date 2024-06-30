@@ -59,7 +59,7 @@ export default function Event() {
                <Tab
                   onClick={() => {
                      searchParams.set("event", "past");
-                     navigate("/dashboard?event=ongoing");
+                     navigate("/dashboard?event=past");
                   }}>
                   past
                </Tab>
