@@ -30,7 +30,7 @@ export default function AddProgram() {
   const createProgram = async (d) => {
     const data = { ...d, eventId };
     const api = await axios.post("http://localhost:3000/program/create/", data);
-    console.log(api);
+    // console.log(api);
   };
 
   return (

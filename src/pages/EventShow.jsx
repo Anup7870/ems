@@ -50,13 +50,17 @@ export default function EventShow() {
         );
         if (data.data.success) {
           setData(data.data.event);
+          // console.log(data.data);
           setFetch(false);
         }
+        // console.log(data.data.event);
       };
+
       featch();
     } catch (error) {
       setFetch(true);
     }
+    // console.log(data);
   }, []);
 
   return (
@@ -103,9 +107,9 @@ export default function EventShow() {
               <LuRefreshCcw className={` cursor-pointer ${refreshing} `} />
             </div>
             <section className="md:px-8">
-              {/* {data.program.map((data, index) => (
-                <ProgramCard />
-              ))} */}
+              {data?.programs.map((program, index) => (
+                <ProgramCard key={index} data={program} />
+              ))}
             </section>
           </div>
         </div>
