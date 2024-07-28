@@ -14,12 +14,14 @@ import {
 import { useForm } from "react-hook-form";
 import { redirect } from "react-router-dom";
 import axios from "axios";
+import { uploadImage } from "../utils/UploadImage";
 export default function AddTeam({ programId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
@@ -33,7 +35,13 @@ export default function AddTeam({ programId }) {
     // now adding the members array to the data object
     data.members = members;
     data.programId = programId;
+    //upload image in cloudanary
+    getValues("image");
+    let image = await uploadImage(getValues("image"));
 
+    data.image = image;
+
+    console.log(getValues("image"));
     const res = await axios.post(
       "http://localhost:3000/program/create/team",
       data
@@ -130,6 +138,15 @@ export default function AddTeam({ programId }) {
                   Member 8
                 </p>
                 <Input placeholder="eg - xyz" {...register("member8")} />
+              </div>
+              <div className="mt-2">
+                <Input
+                  type="file"
+                  onChange={(e) => {
+                    let image = e.target.files[0];
+                    setValue("image", image);
+                  }}
+                />
               </div>
             </ModalBody>
 

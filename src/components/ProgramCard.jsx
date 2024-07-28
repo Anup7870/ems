@@ -6,6 +6,7 @@ import { useState } from "react";
 import EditTeacher from "./EditTeacher";
 import Cookies from "js-cookie";
 import AddTeam from "./AddTeam";
+import ShowTeam from "./ShowTeam";
 export default function ProgramCard({ data }) {
   const [displayNone, setDiasplayNone] = useState(true);
   const [coordinatorEmail, setCoordinatorEmail] = useState("A@email.com");
@@ -17,7 +18,9 @@ export default function ProgramCard({ data }) {
     hidden: displayNone,
   });
   const programId = data;
-  // console.log(programId);
+  const deleteTeam = (teamId) => {
+    setTeams(teams.filter((team) => team._id !== teamId));
+  };
   useEffect(() => {
     try {
       const fetch = async () => {
@@ -69,6 +72,9 @@ export default function ProgramCard({ data }) {
           </ul>
         </nav>
         <AddTeam programId={programId} />
+        {teams.map((team) => (
+          <ShowTeam key={team._id} data={team} deleteTeam={deleteTeam} />
+        ))}
       </section>
       <div
         className=" h-16 rounded-full flex items-center justify-center w-full cursor-pointer "
