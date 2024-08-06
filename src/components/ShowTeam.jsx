@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 export default function ShowTeam({ data }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="mt-5 pb-3">

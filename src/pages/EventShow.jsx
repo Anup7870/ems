@@ -39,6 +39,7 @@ export default function EventShow() {
     try {
       const featch = async () => {
         setFetch(true);
+        // console.log(eventId);
         const data = await axios.get(
           `http://localhost:3000/event/get/${eventId}`,
           {
@@ -50,7 +51,7 @@ export default function EventShow() {
         );
         if (data.data.success) {
           setData(data.data.event);
-          // console.log(data.data);
+          console.log(data.data);
           setFetch(false);
         }
         // console.log(data.data.event);
@@ -62,6 +63,15 @@ export default function EventShow() {
     }
     // console.log(data);
   }, []);
+
+  const handleCopy = () => {
+    const el = document.createElement("textarea");
+    el.value = `http://localhost:5173/registration/${eventId}`;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy"); // or 'cut'
+    document.body.removeChild(el); // Remove the textarea
+  };
 
   return (
     <div className="mt-20 w-full">
@@ -84,7 +94,10 @@ export default function EventShow() {
           </div>
 
           <div className="w-full  px-2 shadow-md flex justify-between items-center gap-2 border-t mt-5 py-2">
-            <div className="flex gap-3  px-1 py-1 bg-green-50 rounded-sm">
+            <div
+              className="flex gap-3  px-1 py-1 bg-green-50 rounded-sm"
+              onClick={handleCopy}
+            >
               <div className="w-8 h-8 cursor-pointer rounded-full flex items-center text-center justify-center bg-green-200">
                 <GoCopy />
               </div>

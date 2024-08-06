@@ -25,7 +25,7 @@ export default function ProgramCard({ data }) {
     try {
       const fetch = async () => {
         const res = await axios.get(
-          `http://localhost:3000/program/get?programId=${programId}`,
+          `http://localhost:3000/program/get?programId=${programId._id}`,
           {
             headers: {
               access_token: Cookies.get("access_token"),
