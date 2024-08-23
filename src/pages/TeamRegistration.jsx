@@ -3,15 +3,19 @@ import { set, useForm } from "react-hook-form";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Input, Heading, Select, Avatar, Button } from "@chakra-ui/react";
+import { uploadImage } from "../utils/UploadImage";
+import toast, { Toaster } from "react-hot-toast";
 export default function TeamRegistration({ setShowNavbar }) {
   useEffect(() => {
     setShowNavbar(false);
   }, [setShowNavbar]);
+
   const {
     register,
     handleSubmit,
     getValues,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
   const [displayImage, setDisplayImage] = useState(null);
@@ -21,6 +25,8 @@ export default function TeamRegistration({ setShowNavbar }) {
 
   const onSubmit = async (data) => {
     // stroing all the memebers in an array
+
+    // toast.loading("Please Wait.....");
 
     const members = [];
     for (let i = 1; i <= 8; i++) {
@@ -33,19 +39,24 @@ export default function TeamRegistration({ setShowNavbar }) {
 
     data.members = members;
     data.eventId = eventId;
+
+    // upload image in cloudanary
+
+    getValues("image");
+    let image = await uploadImage(getValues("image"));
+
+    data.image = image;
     console.log(data);
-    //upload image in cloudanary
-
-    // getValues("image");
-    // let image = await uploadImage(getValues("image"));
-
-    // data.image = image;
-
-    // console.log(getValues("image"));
-    // const res = await axios.post(
-    //   "http://localhost:3000/program/create/team",
-    //   data
-    // );
+    const res = await axios
+      .post("http://localhost:3000/program/create/team", data)
+      .then(() => {
+        reset();
+        toast.success("Team Created Successfully.....");
+      })
+      .catch(() => {
+        reset();
+        toast.error("Something went Wrong....");
+      });
   };
 
   useEffect(() => {
@@ -76,6 +87,9 @@ export default function TeamRegistration({ setShowNavbar }) {
   }, []);
   return (
     <div className=" w-full px-5 md:px-24">
+      <div>
+        <Toaster position="top-center" reverseOrder={false} />
+      </div>
       <Heading as="h1" size="2xl" textAlign="center">
         Registration Form
       </Heading>
